@@ -8,7 +8,7 @@
 import Foundation
 
 let threadCount = 5  // The number of worker threads
-let MAX_THREAD = 2   // The maximum number or concurrent threads
+let MAX_THREAD = 2   // The maximum number of concurrent threads
 let multiplex = DispatchSemaphore(value: MAX_THREAD)
 
 let group = DispatchGroup()
@@ -19,10 +19,12 @@ for i in 1...threadCount {
     let queue = DispatchQueue(label: "com.thieurom.queue\(i)", attributes: .concurrent)
 
     queue.async(group: group) {
+        print("\(i) is trying to enter...")
+
         multiplex.wait()
 
         // critical section here
-        // ...
+        print("\(i) is in.")
 
         multiplex.signal()
     }

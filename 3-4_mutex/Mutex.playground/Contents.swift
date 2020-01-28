@@ -1,6 +1,6 @@
 /*:
  ## Mutex
- Add semaphores to the following example to enforce mutual exclu- sion to the shared variable count.
+ Add semaphores to the following example to enforce mutual exclusion to the shared variable count.
  ### Thread A
  `count = count + 1`
 
@@ -22,17 +22,19 @@ let group = DispatchGroup()
 
 queueA.async(group: group) {
     mutex.wait()
-    print("Increment `count` by 1.")
 
     count += 1
+    print("A increases `count` by 1: \(count)")
+
     mutex.signal()
 }
 
 queueB.async(group: group) {
     mutex.wait()
-    print("Increment `count` by 1.")
 
     count += 1
+    print("B increases `count` by 1: \(count)")
+
     mutex.signal()
 }
 
